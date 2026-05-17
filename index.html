@@ -373,17 +373,21 @@ img, iframe { display: block; max-width: 100%; }
     linear-gradient(180deg, var(--black) 0%, #160606 50%, var(--black) 100%);
 }
 
+/* ── 動画グリッド：3列均等（PC） ── */
 .videos-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.4rem;
+  gap: 2rem;
 }
-.video-card.featured { grid-column: span 2; }
+/* featured クラスは幅を独占しない（全カード均等） */
+.video-card.featured { grid-column: span 1; }
 
 .video-card {
   background: var(--black-l);
   border: 1px solid rgba(212,175,55,.32);
+  border-radius: 2px;
   position: relative; overflow: hidden;
+  display: flex; flex-direction: column;   /* カード内を縦積みに */
   transition: transform .4s ease, box-shadow .4s ease, border-color .4s ease;
 }
 .video-card:hover {
@@ -395,13 +399,21 @@ img, iframe { display: block; max-width: 100%; }
     0 10px 35px rgba(0,0,0,.55);
 }
 
-/* 16:9 ラッパー */
+/* ── 16:9 固定ラッパー ── */
 .video-wrapper {
-  position: relative; padding-top: 56.25%;
-  background: #0a0505; overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;   /* 9÷16 = 56.25% で常に16:9を維持 */
+  background: #0a0505;
+  overflow: hidden;
+  flex-shrink: 0;        /* iframeの高さが潰れないように */
 }
 .video-wrapper iframe {
-  position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  border: none;
+  display: block;
 }
 
 /* プレースホルダー */
@@ -653,9 +665,13 @@ img, iframe { display: block; max-width: 100%; }
 /* =============================================
    レスポンシブ：タブレット（〜1024px）
 ============================================= */
+/* タブレット：2列均等 */
 @media (max-width: 1024px) {
-  .videos-grid { grid-template-columns: repeat(2,1fr); }
-  .video-card.featured { grid-column: span 2; }
+  .videos-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .video-card.featured { grid-column: span 1; }
 }
 
 /* =============================================
@@ -679,7 +695,8 @@ img, iframe { display: block; max-width: 100%; }
 
   .section { padding: 4rem 0; }
 
-  .videos-grid { grid-template-columns: 1fr; }
+  /* スマホ：1列 */
+  .videos-grid { grid-template-columns: 1fr; gap: 1.2rem; }
   .video-card.featured { grid-column: span 1; }
 
   .about-content { grid-template-columns: 1fr; gap: 2.5rem; }
