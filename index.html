@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="和楽器とロックが融合する革新的な音楽体験 — WAGAKKI ROCK">
+  <title>和楽器ロック | WAGAKKI ROCK</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+/* =============================================
+   カラー変数
+============================================= */
+:root {
+  --black:      #111111;
+  --black-l:    #1c1c1c;
+  --red:        #9e0c0c;
+  --red-b:      #c41c1c;
+  --gold:       #d4af37;
+  --gold-l:     #f0d878;
+  --cream:      #f0e6d3;
+  --gray:       #777;
+  --font: 'Noto Serif JP', '游明朝', 'Yu Mincho', 'ヒラギノ明朝 ProN W3', serif;
+}
+
+/* =============================================
+   リセット & ベース
+============================================= */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: var(--font);
+  line-height: 1.9;
+  overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img, iframe { display: block; max-width: 100%; }
+
+/* =============================================
+   和柄パターン（CSSのみ）
+============================================= */
+
+/* 麻の葉風 — ヒーロー背景 */
+.hero-pattern {
+  position: absolute; inset: 0;
+  pointer-events: none; opacity: .055;
+  background-image:
+    linear-gradient(30deg,  #7a0000 12%, transparent 12.5%, transparent 87%, #7a0000 87.5%),
+    linear-gradient(150deg, #7a0000 12%, transparent 12.5%, transparent 87%, #7a0000 87.5%),
+    linear-gradient(30deg,  #7a0000 12%, transparent 12.5%, transparent 87%, #7a0000 87.5%),
+    linear-gradient(150deg, #7a0000 12%, transparent 12.5%, transparent 87%, #7a0000 87.5%),
+    linear-gradient(60deg, rgba(100,0,0,.35) 25%, transparent 25.5%, transparent 75%, rgba(100,0,0,.35) 75%),
+    linear-gradient(60deg, rgba(100,0,0,.35) 25%, transparent 25.5%, transparent 75%, rgba(100,0,0,.35) 75%);
+  background-size: 44px 76px;
+  background-position: 0 0, 0 0, 22px 38px, 22px 38px, 0 0, 22px 38px;
+}
+
+/* 市松模様 — About */
+.about-section { position: relative; }
+.about-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none; opacity: .032;
+  background-image:
+    linear-gradient(45deg, var(--gold) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--gold) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--gold) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--gold) 75%);
+  background-size: 32px 32px;
+  background-position: 0 0, 0 16px, 16px -16px, -16px 0;
+}
+
+/* 波紋 — News */
+.news-section { position: relative; }
+.news-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none; opacity: .042;
+  background-image:
+    radial-gradient(circle, transparent 30%, var(--red) 31%, var(--red) 32%, transparent 33%),
+    radial-gradient(circle, transparent 50%, var(--red) 51%, var(--red) 52%, transparent 53%),
+    radial-gradient(circle, transparent 68%, var(--red) 69%, var(--red) 70%, transparent 71%);
+  background-size: 90px 90px;
+}
+
+.about-section > .container,
+.news-section  > .container { position: relative; z-index: 1; }
+
+/* =============================================
+   ナビゲーション
+============================================= */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 1rem 0;
+  border-bottom: 1px solid transparent;
+  transition: background .4s, padding .4s, border-color .4s;
+}
+.navbar.scrolled {
+  background: rgba(17,17,17,.93);
+  backdrop-filter: blur(14px);
+  padding: .5rem 0;
+  border-bottom: 1px solid rgba(212,175,55,.18);
+}
+
+.nav-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.nav-logo {
+  font-size: 1.35rem; font-weight: 900;
+  color: var(--gold); letter-spacing: .1em;
+  text-shadow: 0 0 18px rgba(212,175,55,.55);
+  transition: text-shadow .3s;
+}
+.nav-logo:hover { text-shadow: 0 0 30px rgba(212,175,55,.85); }
+
+/* メニュー：横並び・箇条書き無し */
+.nav-menu {
+  display: flex;
+  list-style: none;   /* ← 箇条書き完全除去 */
+  gap: 2.5rem;
+}
+.nav-link {
+  font-size: .88rem; letter-spacing: .18em;
+  color: var(--cream);
+  position: relative; padding-bottom: 4px;
+  transition: color .3s;
+}
+.nav-link::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width .3s;
+}
+.nav-link:hover { color: var(--gold); }
+.nav-link:hover::after { width: 100%; }
+
+/* ハンバーガー（スマホ） */
+.nav-toggle {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 6px;
+  z-index: 1001;
+}
+.nav-toggle span {
+  display: block; width: 26px; height: 2px; background: var(--gold);
+  transition: transform .3s, opacity .3s;
+}
+.nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.active span:nth-child(2) { opacity: 0; }
+.nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* =============================================
+   ヒーロー
+============================================= */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 55% at 50%  0%, rgba(110,5,5,.35) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(55,5,5,.25) 0%, transparent 65%),
+    var(--black);
+}
+
+/* 金のキラキラパーティクル */
+.hero-sparks { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.hero-sparks span {
+  position: absolute; width: 2px; height: 2px; border-radius: 50%;
+  background: var(--gold); opacity: 0;
+  animation: sparkFloat 8s ease infinite;
+}
+.hero-sparks span:nth-child(1) { left:15%; top:25%; animation-delay:0s;   animation-duration:7s; }
+.hero-sparks span:nth-child(2) { left:78%; top:18%; animation-delay:1.3s;  animation-duration:9s; }
+.hero-sparks span:nth-child(3) { left:42%; top:62%; animation-delay:2.6s;  animation-duration:6s; }
+.hero-sparks span:nth-child(4) { left:88%; top:44%; animation-delay:.9s;   animation-duration:8s; }
+.hero-sparks span:nth-child(5) { left:22%; top:72%; animation-delay:3.5s;  animation-duration:7s; }
+.hero-sparks span:nth-child(6) { left:60%; top:33%; animation-delay:1.8s;  animation-duration:10s; }
+.hero-sparks span:nth-child(7) { left: 7%; top:55%; animation-delay:4.1s;  animation-duration:8s; }
+.hero-sparks span:nth-child(8) { left:52%; top:82%; animation-delay:2.2s;  animation-duration:9s; }
+@keyframes sparkFloat {
+  0%   { opacity:0;   transform:translateY(0) scale(1); }
+  20%  { opacity:.75; }
+  80%  { opacity:.35; }
+  100% { opacity:0;   transform:translateY(-90px) scale(.3); }
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 2rem 1.5rem; max-width: 920px;
+  animation: fadeUp 1s ease .2s both;
+}
+
+.hero-badge {
+  display: inline-block;
+  border: 1px solid var(--red-b);
+  color: var(--red-b);
+  font-size: .72rem; letter-spacing: .35em;
+  padding: .4rem 1.6rem; margin-bottom: 1.8rem;
+  position: relative;
+}
+.hero-badge::before, .hero-badge::after {
+  content: '◆';
+  position: absolute; top: 50%; transform: translateY(-50%);
+  color: var(--gold); font-size: .45rem;
+}
+.hero-badge::before { left:  -10px; }
+.hero-badge::after  { right: -10px; }
+
+/* タイトル */
+.hero-title { margin-bottom: 1.2rem; line-height: 1; }
+
+.hero-title-main {
+  display: block;
+  white-space: nowrap;
+  font-size: clamp(3.6rem, 11vw, 8.5rem);
+  font-weight: 900; letter-spacing: .08em;
+  /* 金のグラデーションテキスト */
+  background: linear-gradient(160deg, #fff8e0 0%, var(--gold-l) 35%, var(--gold) 65%, #a07820 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 22px rgba(212,175,55,.45));
+  animation: glowPulse 4s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%,100% { filter: drop-shadow(0 0 20px rgba(212,175,55,.4));  }
+  50%      { filter: drop-shadow(0 0 50px rgba(212,175,55,.75)); }
+}
+
+.hero-title-sub {
+  display: block;
+  font-size: clamp(.9rem, 2.5vw, 1.35rem);
+  letter-spacing: .55em; color: var(--red-b);
+  margin-top: .6rem; font-weight: 400;
+}
+
+/* 区切り装飾 */
+.hero-divider {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; margin: 1.4rem 0 1.8rem;
+}
+.hdl { flex:1; max-width:120px; height:1px; }
+.hdl-l { background: linear-gradient(to right,  transparent, rgba(212,175,55,.45)); }
+.hdl-r { background: linear-gradient(to left, transparent, rgba(212,175,55,.45)); }
+.hdo { color:var(--gold); font-size:.5rem; opacity:.8; }
+
+.hero-catchcopy {
+  font-size: clamp(.9rem, 2vw, 1.12rem);
+  line-height: 2.4; color: rgba(240,230,211,.82);
+  letter-spacing: .12em; margin-bottom: 3rem;
+}
+
+/* ── CTAボタン（光沢グラデーション） ── */
+.hero-cta {
+  display: inline-flex; align-items: center; gap: .8rem;
+  /* 光沢グラデーション */
+  background: linear-gradient(
+    160deg,
+    #e02020 0%,
+    #9e0c0c 40%,
+    #6a0505 100%
+  );
+  color: var(--cream);
+  padding: 1.1rem 2.8rem;
+  font-size: 1rem; font-weight: 900;
+  letter-spacing: .2em;
+  font-family: var(--font);
+  border: 1px solid rgba(255,120,120,.25);
+  position: relative; overflow: hidden; cursor: pointer;
+  /* 立体感のある影 */
+  box-shadow:
+    0 0 28px rgba(158,12,12,.65),
+    0 0 70px rgba(158,12,12,.25),
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -1px 0 rgba(0,0,0,.3);
+  transition: transform .3s ease, box-shadow .3s ease;
+  text-decoration: none;
+}
+/* 光沢スライド */
+.hero-cta::before {
+  content: '';
+  position: absolute; top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+  transition: left .55s ease;
+}
+.hero-cta::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 45%;
+  background: linear-gradient(to bottom, rgba(255,255,255,.1), transparent);
+  pointer-events: none;
+}
+.hero-cta:hover::before { left: 100%; }
+.hero-cta:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 40px rgba(196,28,28,.8),
+    0 0 90px rgba(196,28,28,.35),
+    inset 0 1px 0 rgba(255,255,255,.22),
+    inset 0 -1px 0 rgba(0,0,0,.3);
+}
+
+.cta-play {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(255,255,255,.16);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .78rem; flex-shrink: 0;
+}
+
+/* スクロールインジケーター */
+.hero-scroll {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  color: rgba(212,175,55,.5); font-size: .62rem; letter-spacing: .25em;
+  animation: fadeUp 1.5s ease 1.2s both;
+}
+.scroll-line {
+  width: 1px; height: 44px;
+  background: linear-gradient(to bottom, rgba(212,175,55,.5), transparent);
+  animation: scrollBlink 2.2s ease-in-out infinite;
+}
+@keyframes scrollBlink {
+  0%,100% { opacity:.55; } 50% { opacity:.15; }
+}
+
+/* =============================================
+   セクション共通
+============================================= */
+.section { padding: 6rem 0; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+.section-title {
+  text-align: center;
+  font-size: clamp(.88rem, 2.2vw, 1.05rem);
+  letter-spacing: .35em; color: var(--gold);
+  display: flex; align-items: center; justify-content: center; gap: 1rem;
+  margin-bottom: .6rem;
+}
+.tdeco { color: var(--red-b); opacity: .55; }
+
+.section-sub {
+  text-align: center;
+  font-size: .74rem; letter-spacing: .28em; color: var(--gray);
+  margin-bottom: 4rem;
+}
+
+/* 区切りライン */
+.section-sep {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; margin-bottom: 3.5rem;
+}
+.sep-line {
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(212,175,55,.25), transparent);
+}
+.sep-dot { color: var(--red); font-size: .55rem; opacity: .7; }
+
+/* =============================================
+   動画グリッド
+============================================= */
+.videos-section {
+  background:
+    linear-gradient(180deg, var(--black) 0%, #160606 50%, var(--black) 100%);
+}
+
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+}
+.video-card.featured { grid-column: span 2; }
+
+.video-card {
+  background: var(--black-l);
+  border: 1px solid rgba(212,175,55,.32);
+  position: relative; overflow: hidden;
+  transition: transform .4s ease, box-shadow .4s ease, border-color .4s ease;
+}
+.video-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(158,12,12,.55);
+  box-shadow:
+    0 0 24px rgba(158,12,12,.45),
+    0 0 55px rgba(158,12,12,.18),
+    0 10px 35px rgba(0,0,0,.55);
+}
+
+/* 16:9 ラッパー */
+.video-wrapper {
+  position: relative; padding-top: 56.25%;
+  background: #0a0505; overflow: hidden;
+}
+.video-wrapper iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+}
+
+/* プレースホルダー */
+.video-placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 1rem;
+  background: linear-gradient(145deg, #0e0505 0%, #1a0808 100%);
+}
+.play-circle {
+  width: 58px; height: 58px; border-radius: 50%;
+  background: rgba(158,12,12,.75);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; color: var(--cream);
+  box-shadow: 0 0 22px rgba(158,12,12,.5);
+  transition: box-shadow .3s, transform .3s;
+}
+.video-card:hover .play-circle {
+  box-shadow: 0 0 38px rgba(158,12,12,.9);
+  transform: scale(1.12);
+}
+.placeholder-label {
+  font-size: .72rem; color: var(--gray);
+  letter-spacing: .1em; text-align: center;
+  padding: 0 1rem; line-height: 1.7;
+}
+
+.video-info {
+  padding: 1rem 1.2rem 1.2rem;
+  border-top: 1px solid rgba(212,175,55,.12);
+}
+.video-badge {
+  display: inline-block;
+  background: var(--red); color: var(--cream);
+  font-size: .62rem; letter-spacing: .12em;
+  padding: .15rem .55rem; margin-bottom: .45rem;
+}
+.video-title { font-size: .92rem; font-weight: 700; color: var(--cream); }
+.video-desc  { font-size: .78rem; color: var(--gray); margin-top: .3rem; }
+
+/* =============================================
+   プロフィール
+============================================= */
+.about-section {
+  background:
+    linear-gradient(180deg, var(--black) 0%, #121108 50%, var(--black) 100%);
+}
+
+.about-content {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items: start;
+}
+
+.about-heading {
+  font-size: 1rem; color: var(--gold); letter-spacing: .22em;
+  margin-bottom: 1.4rem; padding-bottom: .75rem;
+  border-bottom: 1px solid rgba(212,175,55,.25);
+  position: relative;
+}
+.about-heading::after {
+  content: '';
+  position: absolute; bottom: -1px; left: 0;
+  width: 36px; height: 1px; background: var(--red-b);
+}
+.about-body {
+  font-size: .92rem; color: rgba(240,230,211,.82);
+  line-height: 2.1; margin-bottom: 1.2rem;
+}
+
+/* 楽器アイコン */
+.instrument-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: .9rem;
+}
+.instrument-item {
+  display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  padding: 1.2rem .5rem;
+  border: 1px solid rgba(212,175,55,.32);
+  background: rgba(212,175,55,.04);
+  transition: border-color .3s, background .3s, box-shadow .3s;
+}
+.instrument-item:hover {
+  border-color: rgba(158,12,12,.5);
+  background: rgba(158,12,12,.08);
+  box-shadow: 0 0 18px rgba(158,12,12,.2);
+}
+.instrument-icon {
+  font-size: 1.9rem; font-weight: 900; color: var(--gold); line-height: 1;
+  text-shadow: 0 0 18px rgba(212,175,55,.5);
+}
+.instrument-item span:last-child {
+  font-size: .68rem; letter-spacing: .1em; color: var(--gray);
+}
+
+/* =============================================
+   お知らせ
+============================================= */
+.news-section { background: var(--black); }
+
+.news-list { border-top: 1px solid rgba(212,175,55,.18); }
+.news-item {
+  display: grid; grid-template-columns: 110px 78px 1fr;
+  align-items: center; gap: 1.5rem;
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid rgba(212,175,55,.1);
+  transition: background .3s;
+}
+.news-item:hover { background: rgba(158,12,12,.06); }
+
+.news-date {
+  font-size: .78rem; color: var(--gray);
+  letter-spacing: .05em; font-style: normal; white-space: nowrap;
+}
+.news-tag {
+  display: inline-block; font-size: .62rem;
+  padding: .2rem .55rem; letter-spacing: .12em;
+  text-align: center; border: 1px solid var(--red); color: var(--red-b);
+  white-space: nowrap;
+}
+.tag-mv   { border-color: var(--gold);            color: var(--gold); }
+.tag-blog { border-color: #5566aa;                color: #7788cc; }
+.tag-info { border-color: rgba(212,175,55,.6);    color: var(--gold); }
+
+.news-title-link {
+  font-size: .88rem; color: var(--cream);
+  letter-spacing: .04em; transition: color .3s;
+}
+.news-title-link:hover { color: var(--gold); }
+
+/* =============================================
+   リンク
+============================================= */
+.links-section {
+  background:
+    linear-gradient(180deg, var(--black) 0%, #110510 50%, var(--black) 100%);
+}
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px,1fr));
+  gap: 1.4rem; max-width: 920px; margin: 0 auto;
+}
+.link-card {
+  display: flex; align-items: center; gap: 1.2rem;
+  padding: 1.4rem 1.5rem;
+  border: 1px solid rgba(212,175,55,.32);
+  background: rgba(212,175,55,.03);
+  position: relative; overflow: hidden;
+  transition: transform .3s, box-shadow .3s, border-color .3s, background .3s;
+}
+.link-card::before {
+  content: ''; position: absolute; left:0; top:0; bottom:0;
+  width: 3px; background: var(--red-b);
+  transform: scaleY(0); transform-origin: bottom; transition: transform .3s;
+}
+.link-card:hover::before { transform: scaleY(1); }
+.link-card:hover {
+  transform: translateX(5px);
+  border-color: rgba(158,12,12,.4);
+  background: rgba(158,12,12,.08);
+  box-shadow: 0 0 22px rgba(158,12,12,.22);
+}
+.link-icon { color: var(--red-b); flex-shrink:0; transition: color .3s; }
+.link-card:hover .link-icon { color: var(--gold); }
+.link-name { font-size:.98rem; font-weight:700; color:var(--cream); letter-spacing:.05em; display:block; }
+.link-desc { font-size:.72rem; color:var(--gray); letter-spacing:.06em; display:block; margin-top:.15rem; }
+
+/* =============================================
+   ボタン
+============================================= */
+.center-btn { text-align: center; margin-top: 3rem; }
+.btn-outline {
+  display: inline-block;
+  border: 1px solid var(--gold); color: var(--gold);
+  padding: .85rem 2.6rem; font-size: .82rem; letter-spacing: .28em;
+  font-family: var(--font);
+  position: relative; overflow: hidden; transition: color .3s;
+}
+.btn-outline::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--gold); transform: translateX(-101%); transition: transform .32s ease;
+}
+.btn-outline:hover { color: var(--black); }
+.btn-outline:hover::before { transform: translateX(0); }
+.btn-outline span { position: relative; z-index: 1; }
+
+/* =============================================
+   フッター
+============================================= */
+.footer {
+  padding: 3.5rem 0 2.5rem;
+  border-top: 1px solid rgba(212,175,55,.14);
+  text-align: center; background: var(--black);
+}
+.footer-logo {
+  font-size: 2rem; font-weight: 900; color: var(--gold);
+  opacity: .35; letter-spacing: .22em; margin-bottom: .8rem;
+}
+.footer-copy { font-size: .72rem; color: var(--gray); letter-spacing: .12em; }
+
+/* フッター SNS ボタン */
+.footer-sns {
+  display: flex; flex-wrap: wrap;
+  justify-content: center; gap: .75rem;
+  margin-bottom: 1.8rem;
+}
+.footer-sns-btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .5rem 1.2rem;
+  border: 1px solid rgba(212,175,55,.3);
+  color: rgba(240,230,211,.7);
+  font-size: .78rem; letter-spacing: .1em;
+  transition: border-color .3s, color .3s, background .3s;
+}
+.footer-sns-btn:hover {
+  border-color: var(--red-b);
+  color: var(--cream);
+  background: rgba(158,12,12,.1);
+}
+
+/* About リスト */
+.about-list {
+  list-style: none; margin-bottom: 1.2rem;
+}
+.about-list li {
+  font-size: .9rem; color: rgba(240,230,211,.82);
+  line-height: 1.9; padding-left: 1.2em; position: relative;
+}
+.about-list li:empty { display: none; }
+.about-list li::before {
+  content: '◆';
+  position: absolute; left: 0;
+  color: var(--red-b); font-size: .5rem;
+  top: .6em;
+}
+
+/* =============================================
+   アニメーション
+============================================= */
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(26px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+.fade-in {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .65s ease, transform .65s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* =============================================
+   レスポンシブ：タブレット（〜1024px）
+============================================= */
+@media (max-width: 1024px) {
+  .videos-grid { grid-template-columns: repeat(2,1fr); }
+  .video-card.featured { grid-column: span 2; }
+}
+
+/* =============================================
+   レスポンシブ：スマホ（〜768px）
+============================================= */
+@media (max-width: 768px) {
+  .nav-toggle { display: flex; }
+
+  .nav-menu {
+    position: fixed; top:0; right:0; bottom:0;
+    width: 72vw; max-width: 280px;
+    background: rgba(14,10,10,.97);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 5.5rem 2rem 2rem; gap: 1.8rem;
+    border-left: 1px solid rgba(212,175,55,.18);
+    z-index: 1000;
+    transform: translateX(100%); transition: transform .35s ease;
+  }
+  .nav-menu.open { transform: translateX(0); }
+
+  .section { padding: 4rem 0; }
+
+  .videos-grid { grid-template-columns: 1fr; }
+  .video-card.featured { grid-column: span 1; }
+
+  .about-content { grid-template-columns: 1fr; gap: 2.5rem; }
+
+  .news-item { grid-template-columns: 1fr; gap:.4rem; padding: 1rem; }
+
+  .links-grid { grid-template-columns: 1fr; }
+}
+
+/* =============================================
+   レスポンシブ：小画面（〜480px）
+============================================= */
+@media (max-width: 480px) {
+  .instrument-grid { grid-template-columns: repeat(2,1fr); }
+  .hero-cta { padding: .9rem 1.8rem; font-size: .92rem; }
+  .section-sub { margin-bottom: 2.5rem; }
+  .hero-title-main { font-size: clamp(3rem, 14vw, 5rem); }
+}
+  </style>
+</head>
+<body>
+
+  <!-- ナビゲーション -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo" style="white-space:nowrap">和楽器ロック</a>
+      <button class="nav-toggle" id="navToggle" aria-label="メニューを開く">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#videos"  class="nav-link">動画</a></li>
+        <li><a href="#about"   class="nav-link">プロフィール</a></li>
+        <li><a href="#news"    class="nav-link">お知らせ</a></li>
+        <li><a href="#links"   class="nav-link">リンク</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ヒーロー -->
+  <section class="hero" id="home">
+    <div class="hero-pattern" aria-hidden="true"></div>
+    <div class="hero-sparks" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-badge">和楽器 × ROCK</div>
+
+      <h1 class="hero-title">
+        <span class="hero-title-main">和楽器ロック</span>
+        <span class="hero-title-sub">WAGAKKI ROCK</span>
+      </h1>
+
+      <div class="hero-divider" aria-hidden="true">
+        <span class="hdl hdl-l"></span>
+        <span class="hdo">◆</span>
+        <span class="hdl hdl-r"></span>
+      </div>
+
+      <p class="hero-catchcopy">
+        古の音が、闇を切り裂く。<br>
+        伝統と咆哮が交差する場所で、新たな魂が生まれる。
+      </p>
+
+      <!--
+        ★【最新MVを見る】ボタンのリンク先設定
+        ────────────────────────────────────────
+        ▶ チャンネルのトップページに飛ばす場合:
+            href="https://www.youtube.com/channel/UCferqyV83L0ZsnV_smAsTsQ"
+
+        ▶ 特定の動画に直接飛ばす場合:
+            href="https://www.youtube.com/watch?v=動画ID"
+            （YouTubeで動画を開いたときのURLの "v=" 以降の文字列が動画IDです）
+
+        ▶ 同じページ内の動画枠にスクロールさせる場合:
+            href="#video-1"  ← 下の動画カードの id と一致させてください
+        ────────────────────────────────────────
+      -->
+      <a href="https://www.youtube.com/channel/UCferqyV83L0ZsnV_smAsTsQ"
+         target="_blank" rel="noopener" class="hero-cta">
+        <span class="cta-play" aria-hidden="true">▶</span>
+        最新MVを見る
+      </a>
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- 動画 -->
+  <section class="section videos-section" id="videos">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="tdeco">—</span>Discography / Videos<span class="tdeco">—</span>
+      </h2>
+      <p class="section-sub">楽曲・ミュージックビデオ</p>
+
+      <!--
+        ★【動画の埋め込み方法】
+        ════════════════════════════════════════
+        1. YouTubeで掲載したい動画を開く
+        2. 動画の下の「共有」ボタンをクリック
+        3. 「埋め込む」を選択
+        4. 表示された <iframe ...> ～ </iframe> のコードをコピー
+        5. 各動画カード内の「video-placeholder の div」を削除し、
+           コピーしたiframeコードを貼り付ける
+        ════════════════════════════════════════
+      -->
+      <div class="videos-grid">
+
+        <!-- ============================================================
+             動画スロット①：最新MV（大きく2列分表示）
+             ★ id="video-1" は「最新MVを見る」ボタンのリンク先です
+        ============================================================ -->
+        <div class="video-card featured" id="video-1">
+          <div class="video-wrapper">
+
+            <!-- =========================================
+                 ★ 動画① の動画ID を変更する場合:
+                 src の末尾 "LGBTEZp2MII" の部分だけ書き換えてください
+                 YouTubeのURL例: https://youtu.be/【ここが動画ID】
+                 ========================================= -->
+            <iframe
+              src="https://www.youtube.com/embed/LTbasbY3FhE"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+
+          </div>
+          <div class="video-info">
+            <span class="video-badge">NEW</span>
+            <h3 class="video-title">心を燃やせ / 煉獄杏寿郎</h3>
+            <!-- ★ 説明文を追加したい場合はここに記入（不要なら削除OK） -->
+            <p class="video-desc"></p>
+          </div>
+        </div>
+
+        <!-- ============================================================
+             動画スロット②
+        ============================================================ -->
+        <div class="video-card" id="video-2">
+          <div class="video-wrapper">
+
+            <!-- =========================================
+                 ★ 動画② の動画ID を変更する場合:
+                 src の末尾 "LLGJfnqMwk8" の部分だけ書き換えてください
+                 YouTubeのURL例: https://youtu.be/【ここが動画ID】
+                 ========================================= -->
+            <iframe
+              src="https://www.youtube.com/embed/LLGJfnqMwk8"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+
+          </div>
+          <div class="video-info">
+            <h3 class="video-title">是非に及ばず / 織田信長</h3>
+          </div>
+        </div>
+
+        <!-- ============================================================
+             動画スロット③
+        ============================================================ -->
+        <div class="video-card" id="video-3">
+          <div class="video-wrapper">
+
+            <!-- =========================================
+                 ★ 動画③ の動画ID を変更する場合:
+                 src の末尾 "WqxvXbC4Pv8" の部分だけ書き換えてください
+                 YouTubeのURL例: https://youtu.be/【ここが動画ID】
+                 ========================================= -->
+            <iframe
+              src="https://www.youtube.com/embed/WqxvXbC4Pv8"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+
+          </div>
+          <div class="video-info">
+            <h3 class="video-title">時の河</h3>
+          </div>
+        </div>
+
+      </div><!-- /videos-grid -->
+
+      <div class="center-btn">
+        <a href="https://www.youtube.com/channel/UCferqyV83L0ZsnV_smAsTsQ" target="_blank" rel="noopener" class="btn-outline">
+          <span>チャンネルで全動画を見る</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- プロフィール -->
+  <section class="section about-section" id="about">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="tdeco">—</span>About<span class="tdeco">—</span>
+      </h2>
+      <p class="section-sub">プロフィール</p>
+
+      <div class="about-content">
+        <!-- 左カラム：テキスト -->
+        <div class="about-text">
+
+          <h3 class="about-heading">活動理念</h3>
+          <!-- ★ 活動理念・コンセプトを書いてください -->
+          <p class="about-body">
+            日本古来の和楽器が持つ深く神秘的な音色と、ロックの持つ力強い咆哮を融合させ、
+            新たな音楽の地平を切り拓く。伝統を敬いながらも、既存の枠を壊す。
+            その矛盾の中にこそ、本物の表現が宿ると信じている。
+          </p>
+
+          <h3 class="about-heading">プロフィール</h3>
+          <!-- ★ 以下のダミー文を、実際の自己紹介に書き換えてください -->
+          <p class="about-body">
+            活動名：<strong style="color:var(--gold)">和楽器<wbr>ロック</strong>（WAGAKKI ROCK）<br>
+            活動開始：20XX年<br>
+            拠点：日本
+          </p>
+          <p class="about-body">
+            <!-- ★ 自己紹介・活動歴をここに記入してください -->
+            和楽器とロックの融合をテーマに、YouTubeを中心に活動中。
+            伝統楽器の奥深い表現力と、エレキギター・ベースのグルーヴを組み合わせた
+            オリジナルサウンドを追求しています。
+          </p>
+
+          <h3 class="about-heading">活動内容</h3>
+          <!-- ★ 活動内容のリストを書き換えてください -->
+          <ul class="about-list">
+            <li>YouTube にてオリジナル楽曲・カバー動画を定期配信</li>
+            <li><!-- ★ その他の活動があれば追加してください --></li>
+          </ul>
+
+        </div>
+
+        <!-- 右カラム：使用楽器 -->
+        <div class="instruments">
+          <h3 class="about-heading">使用楽器</h3>
+          <!-- ★ 実際に使っていない楽器は削除し、必要なら追加してください -->
+          <div class="instrument-grid">
+            <div class="instrument-item"><div class="instrument-icon">尺</div><span>尺八</span></div>
+            <div class="instrument-item"><div class="instrument-icon">三</div><span>三味線</span></div>
+            <div class="instrument-item"><div class="instrument-icon">箏</div><span>箏・琴</span></div>
+            <div class="instrument-item"><div class="instrument-icon">太</div><span>和太鼓</span></div>
+            <div class="instrument-item"><div class="instrument-icon">G</div><span>エレキギター</span></div>
+            <div class="instrument-item"><div class="instrument-icon">B</div><span>ベース</span></div>
+          </div>
+
+          <h3 class="about-heading" style="margin-top:2rem">チャンネル</h3>
+          <a href="https://www.youtube.com/channel/UCferqyV83L0ZsnV_smAsTsQ"
+             target="_blank" rel="noopener" class="btn-outline" style="font-size:.78rem;padding:.7rem 1.5rem">
+            <span>▶ YouTubeで見る</span>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- お知らせ -->
+  <section class="section news-section" id="news">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="tdeco">—</span>News &amp; Blog<span class="tdeco">—</span>
+      </h2>
+      <p class="section-sub">お知らせ・ブログ</p>
+
+      <!-- ★ お知らせがあれば以下の形式で追加してください
+      <ul class="news-list">
+        <li class="news-item">
+          <time class="news-date" datetime="2026-00-00">2026.00.00</time>
+          <span class="news-tag tag-info">INFO</span>
+          <a href="#" class="news-title-link">お知らせのタイトル</a>
+        </li>
+      </ul>
+      -->
+      <p style="text-align:center; color:var(--gray); font-size:.88rem; letter-spacing:.12em; padding: 2rem 0;">
+        現在、お知らせはありません。
+      </p>
+
+      <div class="center-btn">
+        <a href="https://your-blog-url.example.com" target="_blank" rel="noopener" class="btn-outline">
+          <span>ブログで全記事を見る</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- リンク -->
+  <section class="section links-section" id="links">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="tdeco">—</span>Links<span class="tdeco">—</span>
+      </h2>
+      <p class="section-sub">SNS・リンク</p>
+
+      <div class="links-grid">
+
+        <a href="https://www.youtube.com/channel/UCferqyV83L0ZsnV_smAsTsQ" target="_blank" rel="noopener" class="link-card">
+          <div class="link-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="34" height="34" aria-hidden="true">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </div>
+          <div><span class="link-name">YouTube</span><span class="link-desc">チャンネルを見る</span></div>
+        </a>
+
+        <!-- ★ href を自分のXアカウントURLに変更 -->
+        <a href="https://x.com/YOUR_ACCOUNT" target="_blank" rel="noopener" class="link-card">
+          <div class="link-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="34" height="34" aria-hidden="true">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </div>
+          <div><span class="link-name">X (Twitter)</span><span class="link-desc">フォローする</span></div>
+        </a>
+
+        <!-- ★ href を自分のTikTokアカウントURLに変更 -->
+        <a href="https://www.tiktok.com/@YOUR_ACCOUNT" target="_blank" rel="noopener" class="link-card">
+          <div class="link-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="34" height="34" aria-hidden="true">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
+            </svg>
+          </div>
+          <div><span class="link-name">TikTok</span><span class="link-desc">ショート動画を見る</span></div>
+        </a>
+
+        <!-- ★ href を自分のブログURLに変更 -->
+        <a href="https://your-blog-url.example.com" target="_blank" rel="noopener" class="link-card">
+          <div class="link-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="34" height="34" aria-hidden="true">
+              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+            </svg>
+          </div>
+          <div><span class="link-name">ブログ</span><span class="link-desc">活動記録を読む</span></div>
+        </a>
+
+        <!-- ★ mailto: を自分のメールアドレスに変更 -->
+        <a href="mailto:your-email@example.com" class="link-card">
+          <div class="link-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="34" height="34" aria-hidden="true">
+              <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+          </div>
+          <div><span class="link-name">お問い合わせ</span><span class="link-desc">メールで連絡する</span></div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-logo">和楽器<wbr>ロック</p>
+
+      <!-- SNSリンクボタン（横並び） -->
+      <div class="footer-sns">
+
+        <!-- ★ YouTubeチャンネル（設定済み） -->
+        <a href="https://www.youtube.com/channel/UCferqyV83L0ZsnV_smAsTsQ"
+           target="_blank" rel="noopener" class="footer-sns-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+          YouTube
+        </a>
+
+        <!-- ★ X（旧Twitter）― href を自分のURLに変更してください -->
+        <a href="https://x.com/YOUR_ACCOUNT"
+           target="_blank" rel="noopener" class="footer-sns-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+          X (Twitter)
+        </a>
+
+        <!-- ★ ブログ ― href を自分のブログURLに変更してください -->
+        <a href="https://your-blog-url.example.com"
+           target="_blank" rel="noopener" class="footer-sns-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+          </svg>
+          ブログ
+        </a>
+
+        <!-- ★ TikTok ― href を自分のURLに変更してください -->
+        <a href="https://www.tiktok.com/@YOUR_ACCOUNT"
+           target="_blank" rel="noopener" class="footer-sns-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true">
+            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
+          </svg>
+          TikTok
+        </a>
+
+      </div><!-- /footer-sns -->
+
+      <p class="footer-copy">© 2026 和楽器ロック / WAGAKKI ROCK — All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+'use strict';
+
+// ナビ：スクロールで背景変化
+const navbar    = document.getElementById('navbar');
+const navToggle = document.getElementById('navToggle');
+const navMenu   = document.getElementById('navMenu');
+
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// ハンバーガーメニュー
+navToggle.addEventListener('click', () => {
+  const open = navMenu.classList.toggle('open');
+  navToggle.classList.toggle('active', open);
+  navToggle.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+document.addEventListener('click', (e) => {
+  if (navMenu.classList.contains('open') && !navbar.contains(e.target)) {
+    navMenu.classList.remove('open');
+    navToggle.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
+navMenu.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => {
+  navMenu.classList.remove('open');
+  navToggle.classList.remove('active');
+  document.body.style.overflow = '';
+}));
+
+// スクロールフェードイン
+const targets = [
+  ...document.querySelectorAll('.video-card'),
+  ...document.querySelectorAll('.instrument-item'),
+  ...document.querySelectorAll('.news-item'),
+  ...document.querySelectorAll('.link-card'),
+  document.querySelector('.about-text'),
+  document.querySelector('.instruments'),
+].filter(Boolean);
+
+targets.forEach(el => el.classList.add('fade-in'));
+
+['.videos-grid', '.instrument-grid', '.links-grid', '.news-list'].forEach(sel => {
+  const c = document.querySelector(sel);
+  if (!c) return;
+  c.querySelectorAll('.fade-in').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.07}s`;
+  });
+});
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+targets.forEach(el => io.observe(el));
+
+// スムーズスクロール（ナビ高さ分補正）
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (!t) return;
+    e.preventDefault();
+    const top = t.getBoundingClientRect().top + window.scrollY - navbar.getBoundingClientRect().height - 8;
+    window.scrollTo({ top, behavior: 'smooth' });
+  });
+});
+  </script>
+</body>
+</html>
